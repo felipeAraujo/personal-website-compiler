@@ -3,6 +3,7 @@ export interface Personal {
     role: string;
     country: string;
     state: string;
+    city: string;
     websites: Websites;
     skills: string[];
     languages: string[];

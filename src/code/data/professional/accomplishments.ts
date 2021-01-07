@@ -1,6 +1,6 @@
 export interface Accomplishments {
     publications: Publication[];
-    "honors&awards": HonorsAwards[];
+    'honors&awards': HonorAward[];
 }
 
 interface Publication {
@@ -9,6 +9,6 @@ interface Publication {
     orienting: string[];
 }
 
-interface HonorsAwards {
+interface HonorAward {
     name: string;
 }
