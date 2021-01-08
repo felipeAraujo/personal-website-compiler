@@ -5,6 +5,15 @@ This page will be created on REACT in order to create the github.io page on the 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+# VSCode settings
+
+This is the vscode config I suggest:
+```
+{
+    "typescript.tsdk": "node_modules\\typescript\\lib"
+}
+```
+
 ## Available Scripts
 
 In the project directory, you can run:
