@@ -1,4 +1,4 @@
-import { Core } from 'views/core';
+import { Core } from 'components/core';
 
 function App() {
   return (
