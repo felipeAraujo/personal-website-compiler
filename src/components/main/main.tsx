@@ -1,11 +1,12 @@
+import { Container } from '@material-ui/core';
 import React from 'react';
 
 import { Personal } from './personal/personal';
 
 export function Main() {
     return (
-        <div className="main">
+        <Container maxWidth="sm">
             <Personal/>
-        </div>
+        </Container>
     );
 }
