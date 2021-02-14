@@ -1,5 +1,5 @@
 import { Core } from 'code/repository/github/core/core';
-import { Personal as PersonalData } from 'code/data/personal/personal';
+import { Personal as PersonalData } from 'code/data/personal/interface/personal';
 import { Personal as PersonalRepositoryInterface } from 'code/repository/interfaces/personal/personal';
 import { DEFAULT_PERSONAL_DATA } from 'code/data/personal/defaults/default-personal-data';
 import { HTTPInterface } from 'code/helpers/http/interface/http-interface';

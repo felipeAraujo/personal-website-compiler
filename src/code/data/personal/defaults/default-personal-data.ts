@@ -1,4 +1,4 @@
-import { Personal } from "code/data/personal/personal";
+import { Personal } from "code/data/personal/interface/personal";
 
 export const DEFAULT_PERSONAL_DATA: Personal = {
     name: '',

@@ -1,30 +1,32 @@
 import { Button, Divider, Drawer, List, ListItem, ListItemIcon, ListItemText, makeStyles } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
+import LanguageIcon from '@material-ui/icons/Language';
 
-import React, { Fragment, useState } from 'react';
+import React, { Dispatch, SetStateAction, Fragment, useState } from 'react';
 
-const useStyles = makeStyles({
-    list: {
-        width: 250,
-    },
-    closeList: {
-        width: 250,
-        position: 'absolute',
-        bottom: 0,
-    },
-    closeButton: {
-        color: 'blue',
-    },
-});
-  
+const useStyles: (props?: any) => Record<'menu' | 'list' | 'closeList' | 'closeButton', string>
+    = makeStyles({
+        menu: {
+            'margin-bottom': '20px',
+        },
+        list: {
+            width: 250,
+        },
+        closeList: {
+            width: 250,
+            position: 'absolute',
+            bottom: 0,
+        },
+        closeButton: {
+            color: 'blue',
+        },
+    });
 
 export function SiteMenu() {
-    const classes = useStyles();
+    const classes: Record<'menu' | 'list' | 'closeList' | 'closeButton', string> = useStyles();
 
-    const [state, setState] = useState({
-        drawerState:false,
-    });
+    const [drawerState, setDrawerState]: [boolean, Dispatch<SetStateAction<boolean>>] = useState<boolean>(false);
 
     function openMenu(): void {
         toggleDrawer(true);
@@ -35,21 +37,24 @@ export function SiteMenu() {
     }
 
     function toggleDrawer(open: boolean): void {
-        setState({
-            ...state,
-            drawerState: open,
-        });
+        setDrawerState(open);
     };
 
     return (
-        <Fragment key="menu">
+        <div className={classes.menu}>
             <Button onClick={openMenu} variant="contained" color="primary">Menu</Button>
-            <Drawer anchor="left" open={state.drawerState}>
+            <Drawer anchor="left" open={drawerState}>
                 <div
                     className={classes.list}
                     id="menuItem"
                     role="presentation"
                 >
+                    <List>
+                        <ListItem button>
+                            <ListItemIcon> <LanguageIcon /> </ListItemIcon>
+                            <ListItemText primary="Idiomas" />
+                        </ListItem>
+                    </List>
                     <List>
                         <ListItem button>
                             <ListItemIcon> <InfoIcon /> </ListItemIcon>
@@ -66,11 +71,11 @@ export function SiteMenu() {
                             onClick={closeMenu}
                         >
                             <ListItemIcon className={classes.closeButton}><ExitToAppRoundedIcon /></ListItemIcon>
-                            <ListItemText primary="Fechar" color="secundary"/>
+                            <ListItemText primary="Fechar"/>
                         </ListItem>
                     </List>
                 </div>
             </Drawer>
-        </Fragment>
+        </div>
     );
 }
