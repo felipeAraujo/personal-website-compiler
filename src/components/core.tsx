@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Main } from './main/main';
+import { Main } from './main/Main';
 
 export function Core() {
     return (
