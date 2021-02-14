@@ -13,24 +13,30 @@ export class Personal extends Core implements PersonalRepositoryInterface {
 
     private requestHandler: HTTPInterface;
 
+    private notifications: ((data: PersonalData) => void)[] = [];
+
     constructor (
         httpInterface: HTTPInterface,
     ) {
         super();
 
         this.requestHandler = httpInterface;
+    }
 
+    public addNotification(callable: ((data: PersonalData) => void)) {
+        this.notifications.push(callable);
+    }
+
+    public updateData(): void
+    {
         this.requestHandler.get(
             this.getUrlPath(),
         ).then(
-            data => {
+            (data: PersonalData) => {
                 this.personalData = data;
+                this.notify(this.personalData);
             },
         )
-    }
-
-    public getPersonalData(): PersonalData {
-        return this.personalData;
     }
 
     protected getLanguage(): string {
@@ -39,5 +45,12 @@ export class Personal extends Core implements PersonalRepositoryInterface {
 
     protected getJsonFile(): string {
         return this.JSON_FILE;
+    }
+
+    private notify(data: PersonalData): void
+    {
+        this.notifications.forEach(
+            (callbackfn: (data: PersonalData) => void) => callbackfn(data),
+        );
     }
 }
