@@ -1,12 +1,20 @@
 import { Button, Divider, Drawer, List, ListItem, ListItemIcon, ListItemText, makeStyles } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
-import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
+import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
 
-import React, { Fragment, useState, KeyboardEvent } from 'react';
+import React, { Fragment, useState } from 'react';
 
 const useStyles = makeStyles({
     list: {
         width: 250,
+    },
+    closeList: {
+        width: 250,
+        position: 'absolute',
+        bottom: 0,
+    },
+    closeButton: {
+        color: 'blue',
     },
 });
   
@@ -47,13 +55,18 @@ export function SiteMenu() {
                             <ListItemIcon> <InfoIcon /> </ListItemIcon>
                             <ListItemText primary="Sobre" />
                         </ListItem>
-                        <Divider />
+                    </List>
+                    <Divider />
+                    <List
+                        className={classes.closeList}
+                        role="presentation"
+                    >
                         <ListItem
                             button
                             onClick={closeMenu}
                         >
-                            <ListItemIcon><CloseRoundedIcon /></ListItemIcon>
-                            <ListItemText primary="Fechar" />
+                            <ListItemIcon className={classes.closeButton}><ExitToAppRoundedIcon /></ListItemIcon>
+                            <ListItemText primary="Fechar" color="secundary"/>
                         </ListItem>
                     </List>
                 </div>
