@@ -1,4 +1,4 @@
-import { Button, Divider, Drawer, List, ListItem, ListItemIcon, ListItemText, makeStyles } from '@material-ui/core';
+import { Button, Divider, Drawer, List, ListItem, ListItemIcon, ListItemText, ListSubheader, makeStyles } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
 import LanguageIcon from '@material-ui/icons/Language';
@@ -8,7 +8,9 @@ import React, { Dispatch, SetStateAction, Fragment, useState } from 'react';
 const useStyles: (props?: any) => Record<'menu' | 'list' | 'closeList' | 'closeButton', string>
     = makeStyles({
         menu: {
-            'margin-bottom': '20px',
+            position: 'fixed',
+            marginTop: '10px',
+            marginLeft: '30px',
         },
         list: {
             width: 250,
@@ -49,7 +51,7 @@ export function SiteMenu() {
                     id="menuItem"
                     role="presentation"
                 >
-                    <List>
+                    <List subheader={<ListSubheader>Menu</ListSubheader>}>
                         <ListItem button>
                             <ListItemIcon> <LanguageIcon /> </ListItemIcon>
                             <ListItemText primary="Idiomas" />

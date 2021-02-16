@@ -1,3 +1,4 @@
+import 'fontsource-roboto';
 import { Core } from 'components/core';
 
 function App() {

@@ -34,7 +34,7 @@ export class Personal extends Core implements PersonalRepositoryInterface {
         ).then(
             (data: PersonalData) => {
                 this.personalData = data;
-                this.notify(this.personalData);
+                this.notify();
             },
         )
     }
@@ -47,10 +47,10 @@ export class Personal extends Core implements PersonalRepositoryInterface {
         return this.JSON_FILE;
     }
 
-    private notify(data: PersonalData): void
+    private notify(): void
     {
         this.notifications.forEach(
-            (callbackfn: (data: PersonalData) => void) => callbackfn(data),
+            (callbackfn: (data: PersonalData) => void) => callbackfn(this.personalData),
         );
     }
 }
