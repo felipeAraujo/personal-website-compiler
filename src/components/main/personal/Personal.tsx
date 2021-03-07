@@ -20,6 +20,9 @@ import { Personal as PersonalRepoInterface } from 'code/repository/interfaces/pe
 import { Personal as PersonalGitRepo } from 'code/repository/github/personal/personal';
 import { AxiosImplementation } from 'code/helpers/http/axios/axios-implementation'
 
+import '../../../code/helpers/translation/i18n/config';
+import { useTranslation } from 'react-i18next';
+
 const useStyles: (props?: any) => Record<
 'roundimage' |
 'presentation' |
@@ -59,6 +62,8 @@ interface layoutState {
 };
 
 function PersonalPresentation({personalData}: {personalData: PersonalInterface}) {
+    const { t } = useTranslation(['personal']);
+
     const style:  Record<
         'roundimage' |
         'presentation' |
@@ -100,7 +105,7 @@ function PersonalPresentation({personalData}: {personalData: PersonalInterface})
                     variant="h4"
                     component="h1"
                 >
-                    Habilidades
+                    {t('personal:skills')}
                 </Typography>
                 <List
                     className={style.list}
@@ -120,7 +125,7 @@ function PersonalPresentation({personalData}: {personalData: PersonalInterface})
                     variant="h4"
                     component="h1"
                 >
-                    Idiomas
+                    {t('personal:languages')}
                 </Typography>
 
                 <List
@@ -139,7 +144,7 @@ function PersonalPresentation({personalData}: {personalData: PersonalInterface})
             <div className={style.website}>
                 <List
                     className={style.websitesList}
-                    subheader={<ListSubheader>Websites</ListSubheader>}
+                    subheader={<ListSubheader>{t('personal:websites')}</ListSubheader>}
                 >
                     <ListItem
                         onClick={gotoLink(personalData.websites.linkedin)}
