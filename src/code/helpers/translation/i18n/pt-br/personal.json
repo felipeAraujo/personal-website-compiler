@@ -1,5 +1,6 @@
 {
-    "skills": "Habilidades",
+    "description": "Descrição",
     "languages": "Idiomas",
+    "skills": "Habilidades",
     "websites": "Websites"
 }

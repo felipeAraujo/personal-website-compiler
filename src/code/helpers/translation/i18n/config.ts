@@ -14,7 +14,7 @@ export const resources = {
         menu: menuEn,
         personal: personalEn,
     },
-    'pt-br': {
+    pt: {
         core: corePT,
         menu: menuPT,
         personal: personalPT,
@@ -22,7 +22,7 @@ export const resources = {
 } as const;
 
 i18n.use(initReactI18next).init({
-    lng: 'en',
+    lng: 'pt-br',
     ns: ['core', 'menu', 'personal'],
     resources,
 });

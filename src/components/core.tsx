@@ -11,7 +11,6 @@ export function Core() {
 
     return (
         <>
-            <noscript>{t('core:javascript-advise')}</noscript>
             <Main />
         </>
     );

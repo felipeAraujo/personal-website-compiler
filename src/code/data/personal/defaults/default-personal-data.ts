@@ -7,6 +7,7 @@ export const DEFAULT_PERSONAL_DATA: Personal = {
     state: '',
     city: '',
     img: '',
+    description: '',
     websites: {
         personal: '',
         linkedin: '',

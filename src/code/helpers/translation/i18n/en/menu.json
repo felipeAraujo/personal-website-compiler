@@ -2,5 +2,7 @@
     "name": "Menu",
     "languages": "Languages",
     "about": "About",
-    "close": "Close"
+    "close": "Close",
+    "portuguese": "Portuguese (BR)",
+    "english": "English"
 }

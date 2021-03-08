@@ -22,6 +22,7 @@ import { AxiosImplementation } from 'code/helpers/http/axios/axios-implementatio
 
 import '../../../code/helpers/translation/i18n/config';
 import { useTranslation } from 'react-i18next';
+import { languageNotifier } from '../../../code/helpers/translation/i18n/notifier';
 
 const useStyles: (props?: any) => Record<
 'roundimage' |
@@ -37,6 +38,8 @@ const useStyles: (props?: any) => Record<
         presentation: {
             textAlign: 'center',
             paddingTop: '50px',
+            width: '600px',
+            margin: 'auto',
         },
         website: {
 
@@ -62,7 +65,7 @@ interface layoutState {
 };
 
 function PersonalPresentation({personalData}: {personalData: PersonalInterface}) {
-    const { t } = useTranslation(['personal']);
+    const { t, i18n } = useTranslation(['personal']);
 
     const style:  Record<
         'roundimage' |
@@ -73,9 +76,15 @@ function PersonalPresentation({personalData}: {personalData: PersonalInterface})
         'list', string
     > = useStyles();
 
-    const gotoLink = (link: string) => (event: MouseEvent) => {
+    const gotoLink = (link: string) => () => {
         window.open(link, '_blank');
     };
+
+    function onLanguageChange(language: string): void {
+        i18n.changeLanguage(language);
+    }
+
+    languageNotifier.addNotification(onLanguageChange);
 
     return (
         <div className={style.presentation}>
@@ -99,6 +108,19 @@ function PersonalPresentation({personalData}: {personalData: PersonalInterface})
             </Typography>
 
             <p>{personalData.city} - {personalData.state} - {personalData.country}</p>
+            <Divider />
+            <Typography
+                variant="h4"
+                component="h1"
+            >
+                {t('personal:description')}
+            </Typography>
+
+            <Typography
+                component="p"
+            >
+                {personalData.description}
+            </Typography>
             <Divider />
             <div className={style.skills}>
                 <Typography
@@ -187,8 +209,8 @@ export function Personal() {
     const personalRepo: PersonalRepoInterface = new PersonalGitRepo(new AxiosImplementation());
 
     useEffect((): void => {
-        personalRepo.updateData();
         personalRepo.addNotification(onDataChange);
+        personalRepo.updateData();
     }, [])
 
     function onDataChange(personalData: PersonalInterface) {

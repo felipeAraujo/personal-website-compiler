@@ -1,12 +1,16 @@
-import { Button, Divider, Drawer, List, ListItem, ListItemIcon, ListItemText, ListSubheader, makeStyles } from '@material-ui/core';
+import { Button, Collapse, Divider, Drawer, List, ListItem, ListItemIcon, ListItemText, ListSubheader, makeStyles } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
 import LanguageIcon from '@material-ui/icons/Language';
 
-import React, { Dispatch, SetStateAction, Fragment, useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 
 import '../../../code/helpers/translation/i18n/config';
+import brazilFlag from '../../../assets/imgs/brazil.png';
+import ukFlag from '../../../assets/imgs/united-kingdom.png';
 import { useTranslation } from 'react-i18next';
+import { ExpandLess, ExpandMore } from '@material-ui/icons';
+import { languageNotifier } from 'code/helpers/translation/i18n/notifier';
 
 const useStyles: (props?: any) => Record<'menu' | 'list' | 'closeList' | 'closeButton', string>
     = makeStyles({
@@ -29,11 +33,19 @@ const useStyles: (props?: any) => Record<'menu' | 'list' | 'closeList' | 'closeB
     });
 
 export function SiteMenu() {
-    const { t } = useTranslation(['menu']);
+    const { t, i18n } = useTranslation(['menu']);
 
     const classes: Record<'menu' | 'list' | 'closeList' | 'closeButton', string> = useStyles();
 
     const [drawerState, setDrawerState]: [boolean, Dispatch<SetStateAction<boolean>>] = useState<boolean>(false);
+
+    const [openLanguages, setOpenLanguages] = useState<boolean>(false);
+
+    languageNotifier.addNotification(onLanguageChange);
+
+    function onLanguageChange(language: string) {
+        i18n.changeLanguage(language);
+    }
 
     function openMenu(): void {
         toggleDrawer(true);
@@ -47,6 +59,16 @@ export function SiteMenu() {
         setDrawerState(open);
     };
 
+    function openCloseLanguagesMenu(): void {
+        setOpenLanguages(!openLanguages);
+    }
+
+    const changeLanguage = (language: string): (() => void) => {
+        return () => {
+            languageNotifier.notify(language);
+        }
+    };
+
     return (
         <div className={classes.menu}>
             <Button onClick={openMenu} variant="contained" color="primary">{t('menu:name')}</Button>
@@ -57,16 +79,31 @@ export function SiteMenu() {
                     role="presentation"
                 >
                     <List subheader={<ListSubheader>Menu</ListSubheader>}>
-                        <ListItem button>
+                        <ListItem button onClick={openCloseLanguagesMenu}>
                             <ListItemIcon> <LanguageIcon /> </ListItemIcon>
                             <ListItemText primary={t('menu:languages')} />
+                            {openLanguages ? <ExpandLess /> : <ExpandMore />}
                         </ListItem>
-                    </List>
-                    <List>
-                        <ListItem button>
+                        <Collapse in={openLanguages} unmountOnExit>
+                            <List component="div">
+                                <ListItem button onClick={changeLanguage('pt-br')}>
+                                    <ListItemIcon>
+                                        <img src={brazilFlag} width="25" height="25"/>
+                                    </ListItemIcon>
+                                    <ListItemText primary={t('menu:portuguese')}></ListItemText>
+                                </ListItem>
+                                <ListItem button onClick={changeLanguage('en')}>
+                                    <ListItemIcon>
+                                        <img src={ukFlag} width="25" height="25"/>
+                                    </ListItemIcon>
+                                    <ListItemText primary={t('menu:english')}></ListItemText>
+                                </ListItem>
+                            </List>
+                        </Collapse>
+                        {/* <ListItem button>
                             <ListItemIcon> <InfoIcon /> </ListItemIcon>
                             <ListItemText primary={t('menu:about')} />
-                        </ListItem>
+                        </ListItem> */}
                     </List>
                     <Divider />
                     <List
