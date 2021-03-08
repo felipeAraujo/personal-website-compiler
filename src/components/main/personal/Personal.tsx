@@ -36,7 +36,8 @@ const useStyles: (props?: any) => Record<
         presentation: {
             textAlign: 'center',
             paddingTop: '50px',
-            width: '600px',
+            width: '100%',
+            maxWidth: '600px',
             margin: 'auto',
         },
         website: {
