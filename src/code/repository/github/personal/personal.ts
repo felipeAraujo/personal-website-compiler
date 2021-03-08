@@ -39,6 +39,11 @@ export class Personal extends Core implements PersonalRepositoryInterface {
         )
     }
 
+    public setLanguage(language: string): void {
+        this.language = language;
+        this.updateData();
+    }
+
     protected getLanguage(): string {
         return this.language;
     }

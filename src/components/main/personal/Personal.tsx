@@ -1,4 +1,4 @@
-import React, { MouseEvent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
     CircularProgress,
@@ -16,13 +16,11 @@ import GitHubIcon from '@material-ui/icons/GitHub';
 
 import { DEFAULT_PERSONAL_DATA } from 'code/data/personal/defaults/default-personal-data';
 import { Personal as PersonalInterface } from 'code/data/personal/interface/personal';
-import { Personal as PersonalRepoInterface } from 'code/repository/interfaces/personal/personal';
-import { Personal as PersonalGitRepo } from 'code/repository/github/personal/personal';
-import { AxiosImplementation } from 'code/helpers/http/axios/axios-implementation'
 
 import '../../../code/helpers/translation/i18n/config';
 import { useTranslation } from 'react-i18next';
 import { languageNotifier } from '../../../code/helpers/translation/i18n/notifier';
+import { personalRepository } from 'code/repository';
 
 const useStyles: (props?: any) => Record<
 'roundimage' |
@@ -132,9 +130,9 @@ function PersonalPresentation({personalData}: {personalData: PersonalInterface})
                 <List
                     className={style.list}
                 >
-                    {personalData.skills.map((value: string): JSX.Element => {
+                    {personalData.skills.map((value: string, index: number): JSX.Element => {
                         return(
-                            <ListItem button>
+                            <ListItem button key={index}>
                                 <ListItemText primary={value}/>
                             </ListItem>
                         );
@@ -153,9 +151,9 @@ function PersonalPresentation({personalData}: {personalData: PersonalInterface})
                 <List
                     className={style.list}
                 >
-                    {personalData.languages.map((value: string): JSX.Element => {
+                    {personalData.languages.map((value: string, index: number): JSX.Element => {
                         return(
-                            <ListItem button>
+                            <ListItem button key={index}>
                                 <ListItemText primary={value}/>
                             </ListItem>
                         );
@@ -206,11 +204,9 @@ export function Personal() {
         loading: true,
     });
 
-    const personalRepo: PersonalRepoInterface = new PersonalGitRepo(new AxiosImplementation());
-
     useEffect((): void => {
-        personalRepo.addNotification(onDataChange);
-        personalRepo.updateData();
+        personalRepository.addNotification(onDataChange);
+        personalRepository.updateData();
     }, [])
 
     function onDataChange(personalData: PersonalInterface) {

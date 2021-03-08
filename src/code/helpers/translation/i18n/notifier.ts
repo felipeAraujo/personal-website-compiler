@@ -1,3 +1,5 @@
+import { personalRepository } from "code/repository";
+
 class LanguageNotifier {
     private notifications: ((data: string) => void)[] = [];
 
@@ -9,6 +11,7 @@ class LanguageNotifier {
         this.notifications.forEach(
             (callbackfn: (language: string) => void) => callbackfn(language),
         );
+        personalRepository.setLanguage(language);
     }
 }
 

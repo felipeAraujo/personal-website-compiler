@@ -1,5 +1,5 @@
 import { Button, Collapse, Divider, Drawer, List, ListItem, ListItemIcon, ListItemText, ListSubheader, makeStyles } from '@material-ui/core';
-import InfoIcon from '@material-ui/icons/Info';
+// import InfoIcon from '@material-ui/icons/Info';
 import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
 import LanguageIcon from '@material-ui/icons/Language';
 
@@ -88,13 +88,13 @@ export function SiteMenu() {
                             <List component="div">
                                 <ListItem button onClick={changeLanguage('pt-br')}>
                                     <ListItemIcon>
-                                        <img src={brazilFlag} width="25" height="25"/>
+                                        <img src={brazilFlag} alt={t('menu:portuguese')} width="25" height="25"/>
                                     </ListItemIcon>
                                     <ListItemText primary={t('menu:portuguese')}></ListItemText>
                                 </ListItem>
                                 <ListItem button onClick={changeLanguage('en')}>
                                     <ListItemIcon>
-                                        <img src={ukFlag} width="25" height="25"/>
+                                        <img src={ukFlag} width="25" alt={t('menu:english')} height="25"/>
                                     </ListItemIcon>
                                     <ListItemText primary={t('menu:english')}></ListItemText>
                                 </ListItem>
