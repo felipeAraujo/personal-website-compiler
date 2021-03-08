@@ -5,6 +5,7 @@ export interface Personal {
     state: string;
     city: string;
     img: string;
+    description: string;
     websites: Websites;
     skills: string[];
     languages: string[];

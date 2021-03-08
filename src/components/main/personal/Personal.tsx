@@ -1,4 +1,4 @@
-import React, { MouseEvent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
     CircularProgress,
@@ -16,9 +16,11 @@ import GitHubIcon from '@material-ui/icons/GitHub';
 
 import { DEFAULT_PERSONAL_DATA } from 'code/data/personal/defaults/default-personal-data';
 import { Personal as PersonalInterface } from 'code/data/personal/interface/personal';
-import { Personal as PersonalRepoInterface } from 'code/repository/interfaces/personal/personal';
-import { Personal as PersonalGitRepo } from 'code/repository/github/personal/personal';
-import { AxiosImplementation } from 'code/helpers/http/axios/axios-implementation'
+
+import '../../../code/helpers/translation/i18n/config';
+import { useTranslation } from 'react-i18next';
+import { languageNotifier } from '../../../code/helpers/translation/i18n/notifier';
+import { personalRepository } from 'code/repository';
 
 const useStyles: (props?: any) => Record<
 'roundimage' |
@@ -34,6 +36,8 @@ const useStyles: (props?: any) => Record<
         presentation: {
             textAlign: 'center',
             paddingTop: '50px',
+            width: '600px',
+            margin: 'auto',
         },
         website: {
 
@@ -59,6 +63,8 @@ interface layoutState {
 };
 
 function PersonalPresentation({personalData}: {personalData: PersonalInterface}) {
+    const { t, i18n } = useTranslation(['personal']);
+
     const style:  Record<
         'roundimage' |
         'presentation' |
@@ -68,9 +74,15 @@ function PersonalPresentation({personalData}: {personalData: PersonalInterface})
         'list', string
     > = useStyles();
 
-    const gotoLink = (link: string) => (event: MouseEvent) => {
+    const gotoLink = (link: string) => () => {
         window.open(link, '_blank');
     };
+
+    function onLanguageChange(language: string): void {
+        i18n.changeLanguage(language);
+    }
+
+    languageNotifier.addNotification(onLanguageChange);
 
     return (
         <div className={style.presentation}>
@@ -95,19 +107,32 @@ function PersonalPresentation({personalData}: {personalData: PersonalInterface})
 
             <p>{personalData.city} - {personalData.state} - {personalData.country}</p>
             <Divider />
+            <Typography
+                variant="h4"
+                component="h1"
+            >
+                {t('personal:description')}
+            </Typography>
+
+            <Typography
+                component="p"
+            >
+                {personalData.description}
+            </Typography>
+            <Divider />
             <div className={style.skills}>
                 <Typography
                     variant="h4"
                     component="h1"
                 >
-                    Habilidades
+                    {t('personal:skills')}
                 </Typography>
                 <List
                     className={style.list}
                 >
-                    {personalData.skills.map((value: string): JSX.Element => {
+                    {personalData.skills.map((value: string, index: number): JSX.Element => {
                         return(
-                            <ListItem button>
+                            <ListItem button key={index}>
                                 <ListItemText primary={value}/>
                             </ListItem>
                         );
@@ -120,15 +145,15 @@ function PersonalPresentation({personalData}: {personalData: PersonalInterface})
                     variant="h4"
                     component="h1"
                 >
-                    Idiomas
+                    {t('personal:languages')}
                 </Typography>
 
                 <List
                     className={style.list}
                 >
-                    {personalData.languages.map((value: string): JSX.Element => {
+                    {personalData.languages.map((value: string, index: number): JSX.Element => {
                         return(
-                            <ListItem button>
+                            <ListItem button key={index}>
                                 <ListItemText primary={value}/>
                             </ListItem>
                         );
@@ -139,7 +164,7 @@ function PersonalPresentation({personalData}: {personalData: PersonalInterface})
             <div className={style.website}>
                 <List
                     className={style.websitesList}
-                    subheader={<ListSubheader>Websites</ListSubheader>}
+                    subheader={<ListSubheader>{t('personal:websites')}</ListSubheader>}
                 >
                     <ListItem
                         onClick={gotoLink(personalData.websites.linkedin)}
@@ -179,11 +204,9 @@ export function Personal() {
         loading: true,
     });
 
-    const personalRepo: PersonalRepoInterface = new PersonalGitRepo(new AxiosImplementation());
-
     useEffect((): void => {
-        personalRepo.updateData();
-        personalRepo.addNotification(onDataChange);
+        personalRepository.addNotification(onDataChange);
+        personalRepository.updateData();
     }, [])
 
     function onDataChange(personalData: PersonalInterface) {
