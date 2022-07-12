@@ -182,16 +182,28 @@ function PersonalPresentation({personalData}: {personalData: PersonalInterface})
                         <GitHubIcon />
                     </ListItem>
                     <ListItem
-                        onClick={gotoLink(personalData.websites.personal)}
+                        onClick={gotoLink(personalData.websites.blog)}
                         button
                     >
-                        <ListItemText primary="Website"/>
+                        <ListItemText primary="Blog"/>
+                    </ListItem>
+                    <ListItem
+                        onClick={gotoLink(personalData.websites.gitlab)}
+                        button
+                    >
+                        <ListItemText primary="Gitlab"/>
                     </ListItem>
                     <ListItem
                         onClick={gotoLink(personalData.websites.bitbucket)}
                         button
                     >
                         <ListItemText primary="Bitbucket"/>
+                    </ListItem>
+                    <ListItem
+                        onClick={gotoLink(personalData.websites.personal)}
+                        button
+                    >
+                        <ListItemText primary="Website"/>
                     </ListItem>
                 </List>
             </div>

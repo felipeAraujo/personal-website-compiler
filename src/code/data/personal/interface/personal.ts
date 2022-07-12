@@ -17,4 +17,5 @@ interface Websites {
     github: string;
     bitbucket: string;
     gitlab: string;
+    blog: string;
 }
