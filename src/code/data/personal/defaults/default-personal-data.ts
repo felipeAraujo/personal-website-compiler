@@ -14,6 +14,7 @@ export const DEFAULT_PERSONAL_DATA: Personal = {
         github: '',
         bitbucket: '',
         gitlab: '',
+        blog: '',
     },
     skills: [],
     languages: [],

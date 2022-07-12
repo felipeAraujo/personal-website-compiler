@@ -1,9 +1,9 @@
 import { Button, Collapse, Divider, Drawer, List, ListItem, ListItemIcon, ListItemText, ListSubheader, makeStyles } from '@material-ui/core';
-// import InfoIcon from '@material-ui/icons/Info';
+
 import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
 import LanguageIcon from '@material-ui/icons/Language';
 
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 import '../../../code/helpers/translation/i18n/config';
 import brazilFlag from '../../../assets/imgs/brazil.png';
@@ -33,6 +33,23 @@ const useStyles: (props?: any) => Record<'menu' | 'list' | 'closeList' | 'closeB
     });
 
 export function SiteMenu() {
+
+    const [mounted, setMounted] = useState(false)
+
+    if(!mounted){
+        window.addEventListener("keyup", function(this: Window, event: KeyboardEvent): any {
+            if (event.key !== 'Escape') {
+                return;
+            }
+
+            closeMenu();
+        })
+    }
+
+    useEffect(() =>{
+      setMounted(true)
+    },[])
+
     const { t, i18n } = useTranslation(['menu']);
 
     const classes: Record<'menu' | 'list' | 'closeList' | 'closeButton', string> = useStyles();
